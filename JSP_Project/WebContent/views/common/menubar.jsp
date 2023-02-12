@@ -2,7 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	String contextPath = request.getContextPath();
+	String contextPath = request.getContextPath(); // : /jspproject
 
 	Member loginUser = (Member)session.getAttribute("loginUser");
 	// 로그인 전 : null값이 담김
@@ -122,43 +122,6 @@
 		<div class="menu"><a href="<%= contextPath %>/list.bo?currentPage=1">일반게시판</a></div>
 		<div class="menu"><a href="<%= contextPath %>/list.th">사진게시판</a></div>
 	</div>
-	
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 </body>
 </html>
