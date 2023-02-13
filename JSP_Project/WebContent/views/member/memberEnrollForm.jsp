@@ -6,13 +6,6 @@
 <meta charset="UTF-8">
 <title>회원가입 폼</title>
 <style>
-	.outer{
-		background: black;
-		color: white;
-		width: 100%;
-		margin: auto;
-		margin-top: 50px; 
-	}
 	#enroll-form table{margin: auto;}
 	#enroll-form input{margin: 5px;}
 </style>
@@ -93,7 +86,7 @@
 			<br><br>
 			
 			<div align="center">
-				<button type="button">회원가입</button>
+				<button type="submit">회원가입</button>
 				<button type="reset">초기화</button>
 			</div>
 			<br><br>
