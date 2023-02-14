@@ -3,18 +3,20 @@ package com.kh.common;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
+import java.sql.Connection;
 
 public class JDBCTemplate {
 	
 	// 1. Connection객체 생성 한 후 해당 Connection반환하는 메소드
+	// Connection : DB와의 연결 정보를 담고 있는 객체(IP주소, PORT 번호, 계정명, 비밀번호)
 	public static Connection getConnection() {
 		
+		// DB와 연결하고자하는 연결정보 -> Properties에 따로 뺄것임
 		Properties prop = new Properties(); // Map 계열 컬렉션(key-value)
 		
 		// 읽어들이고자하는 driver.properties파일의 물리적인 경로
