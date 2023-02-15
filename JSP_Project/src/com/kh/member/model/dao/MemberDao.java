@@ -32,14 +32,18 @@ public class MemberDao {
 		}
 	}
 	
+	// DB에 접근해 실제로 존재하는 회원인지 아닌지 조회
 	public Member loginMember(Connection conn, String userId, String userPwd) {
 		
 		// SELECT문 => 반환형 ResultSet객체(조회된 행은 1개이거나 없거나)
+		// Member 객체에 담을것임
 		Member m = null;
 		
+		// 필요한 변수들을 셋팅하는 과정이 필요함
 		ResultSet rset = null;
 		
 		// Statement : sql문을 실행할 수 있는 객체이나 보안상 PreparedStatement로 실행
+		// ResultSet 객체를 얻어오기 위해서는 PreparedStatement 객체가 sql문을 실행해줘야 결과값을 받아줄 수 있다.
 		PreparedStatement pstmt = null;
 		
 		String sql = prop.getProperty("loginMember"); // member-mapper.xml의 key값인 loginMember을 읽어들인다.
@@ -47,9 +51,12 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql); // 생성 후 예외처리한것
 			
+			// sql ? 에 값들 넣어주기 -> 미완성된 쿼리문 완성됨
 			pstmt.setString(1, userId);
 			pstmt.setString(2, userPwd);
 			
+			
+			// executeQuery()로 쿼리문 실행시켜서 ResultSet객체 반환
 			rset = pstmt.executeQuery();
 			
 			// rset을 Member타입 객체로 형변환

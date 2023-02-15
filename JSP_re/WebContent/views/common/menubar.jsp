@@ -1,7 +1,12 @@
+<%@ page import="com.kh.member.model.vo.Member" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
 	String contextPath = request.getContextPath();
+
+	Member loginUser = (Member)session.getAttribute("loginUser");
+
+	String alertMsg = (String)session.getAttribute("alertMsg");
 %>
 <!DOCTYPE html>
 <html>
@@ -17,7 +22,7 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Welcome C Class</title>
 <style>
-	#login-form, #login-info{float: right;}
+	#login-form, #user-info{float: right;}
 	#user-info a{
 		text-decoration: none;
 		color: black;
@@ -53,9 +58,21 @@
 </style>
 </head>
 <body>
+	<script>
+		const msg = "<%= alertMsg %>"
+		if(msg != "null"){ // "성공적으로 로그인이 되었습니다." / "null"
+			alert(msg);
+			// 알람창을 띄워준 후 session에 담긴 메세지는 지워줘야함
+			// 안그러면 menubar.jsp가 로딩될때마다 매번 alert함수가 실행됨
+			<% session.removeAttribute("alertMsg"); %>
+		}
+	</script>
 	<h1 align="center">Welcome C Class</h1>
 	
 	<div class="loginarea">
+		
+		<% if(loginUser == null) { %>
+		<!-- 로그인 이전에만 보여지는 로그인 form -->
 		<form id="login-form" action="<%= contextPath %>/login.me" method="post">
 			<table>
 				<tr>
@@ -74,7 +91,25 @@
 				</tr>
 			</table>
 		</form>
+		<script>
+			function enrollPage() {
+				// url 설정
+				location.href = "<%= contextPath %>/enrollForm.me";
+			}
+		</script>
+		<% } else { %>
+			<!-- 로그인 성공 후 : 로그인창 없는 상태-->
+			<div id="user-info">
+				<b><%= loginUser.getUserName() %>님 환영합니다.</b>
+				<br><br>
+				<div align="center">
+					<a href="<%= contextPath %>/myPage.me">마이페이지</a>
+					<a href="<%= contextPath %>/logout.me">로그아웃</a>
+				</div>
+			</div>
+		<%} %>
 	</div>
+
 	
 	<br clear="both">
 	<br>

@@ -7,12 +7,16 @@ import com.kh.common.JDBCTemplate;
 import com.kh.member.model.dao.MemberDao;
 import com.kh.member.model.vo.Member;
 
+// DB에 접근해서 얻어온 변수들을가지고 일치항목을 찾기위해
+// Controller에서 정보를 넘겨 처리하게끔 한 곳
 public class MemberService {
 
 	public Member loginMember(String userId, String userPwd) {
 		
 		Connection conn = JDBCTemplate.getConnection();
 		
+		// Connection객체와 userId, userPwd를 가지고 MemberDao()를 호출해서 
+		// DB에 접근해 실제로 존재하는 아이디, pwd인지 체크해보도록 함
 		Member m = new MemberDao().loginMember(conn, userId, userPwd);
 		
 		try {
