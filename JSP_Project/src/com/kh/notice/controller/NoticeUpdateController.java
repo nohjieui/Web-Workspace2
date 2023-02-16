@@ -1,8 +1,6 @@
 package com.kh.notice.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -10,19 +8,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.notice.model.service.NoticeService;
-import com.kh.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeListController
+ * Servlet implementation class NoticeUpdateController
  */
-@WebServlet("/list.no")
-public class NoticeListController extends HttpServlet {
+@WebServlet("/update.no")
+public class NoticeUpdateController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListController() {
+    public NoticeUpdateController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -31,23 +28,30 @@ public class NoticeListController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		// 1) 공지사항 전체리스트 조회 한 후 
-		ArrayList<Notice> list = new NoticeService().selectNoticeList();
-		// SELECT * FORM NOTICE WHERE STATUS = 'Y'
-		
-		// 2) 조회 결과를 담아서(request/session...) 응답페이지로 포워딩
-		request.setAttribute("list", list);
-		
-		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		String title = request.getParameter("title");
+		String content = request.getParameter("content");
+		
+		int result = new NoticeService().updateNotice(title, content, nno);
+		
+		if(result > 0) {
+			request.getSession().setAttribute("alertMsg", "공지사항 수정 되었습니다.");
+			response.sendRedirect(request.getContextPath()+"/list.no");
+		}else {
+			request.getSession().setAttribute("errorMsg", "공지사항 수정 실패했습니다. 다시 입력해주세요.");
+			
+			
+		}
 	}
 
 }

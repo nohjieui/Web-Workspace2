@@ -42,9 +42,10 @@ public class MemberDeleteController extends HttpServlet {
 		request.setCharacterEncoding("UTF-8");
 		
 		String userPwd = request.getParameter("userPwd");
+		
 		// 아이디값 얻어오기
 		String userId = ((Member)request.getSession().getAttribute("loginUser")).getUserId();
-		
+
 		// 로그인한 회원의 정보를 얻어오는 방법
 		// 방법 1. session 영역에 담겨있는 회원객체로부터 뽑아내기
 		// 방법 2. input type="hidden" 회원정보를 숨겨서 요청시 함께 전달하기

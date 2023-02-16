@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>공지사항 리스트 조회 페이지</title>
 <style>
 	.list-area{
 		border: 1px solid white;

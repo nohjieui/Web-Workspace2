@@ -21,4 +21,75 @@ public class NoticeService {
 		return list;
 		
 	}
+	
+	public int increaseCount(int nno) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().increaseCount(conn, nno);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	public Notice selectNotice(int nno) {
+		
+		Connection conn = getConnection();
+		
+		Notice n = new NoticeDao().selectNotice(conn, nno);
+		
+		// DML 문이 아니기때문에 트랜젝션 처리 x
+		close(conn);
+		
+		return n;
+	}
+	
+	public int insertNotice(String title, String content, int userNo) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().insertNotice(conn, title, content, userNo);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
+	
+	public int deleteNotice(int nno) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().deleteNotice(conn, nno);
+		
+		close(conn);
+		
+		return result;
+	}
+	
+	public int updateNotice(String title, String content, int nno) {
+		
+		Connection conn = getConnection();
+		
+		int result = new NoticeDao().updateNotice(conn, title, content, nno);
+		
+		if(result > 0) {
+			commit(conn);
+		}else {
+			rollback(conn);
+		}
+		close(conn);
+		
+		return result;
+	}
 }
