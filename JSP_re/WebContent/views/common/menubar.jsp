@@ -22,28 +22,28 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <title>Welcome C Class</title>
 <style>
-	#login-form, #user-info{float: right;}
+	#login-form, #user-info{float: right}
 	#user-info a{
 		text-decoration: none;
 		color: black;
 		font-size: 12px;
 	}
-	.nav-area{background: #B0C4DE;}
+	.nav-area{background: black;}
 	.menu{
-		display: table-cell;
-		height: 50px; 
+		display: table-cell; /* 인라인 요소처럼 배치 가능 */
+		height: 50px;
 		width: 150px;
 	}
 	.menu a{
-	text-decoration: none;
-	color: white;
-	font-size: 20px;
-	font-weight: bold;
-	display: block;
-	width: 100%;
-	height: 100%;
-	
-	line-height: 50px; /* 위 아래에서 가운데로 조정 */
+		text-decoration: none;
+		color: white;
+		font-size: 20px;
+		font-weight: bold;
+		display: block;
+		width: 100%;
+		height: 100%;
+		
+		line-height: 50px; /* 위 아래에서 가운데로 조정 */
 	}
 	.menu a:hover{
 		background: darkgray;

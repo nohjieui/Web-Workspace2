@@ -77,11 +77,11 @@ public class NoticeService {
 		return result;
 	}
 	
-	public int updateNotice(String title, String content, int nno) {
+	public int updateNotice(Notice n) {
 		
 		Connection conn = getConnection();
 		
-		int result = new NoticeDao().updateNotice(conn, title, content, nno);
+		int result = new NoticeDao().updateNotice(conn, n);
 		
 		if(result > 0) {
 			commit(conn);

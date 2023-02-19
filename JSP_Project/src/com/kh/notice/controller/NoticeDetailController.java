@@ -52,6 +52,7 @@ public class NoticeDetailController extends HttpServlet {
 			// 데이터 조회 서비스 : 공지사항 정보 Notice n에 담기
 			Notice n = new NoticeService().selectNotice(nno);
 			request.setAttribute("n", n);
+			
 			request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
 			
 		} else { // 조회수 증가 실패 시 -> 에러페이지로 포워딩

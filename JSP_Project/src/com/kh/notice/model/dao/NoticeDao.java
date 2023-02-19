@@ -178,7 +178,7 @@ public class NoticeDao {
 		return result;
 	}
 	
-	public int updateNotice(Connection conn, String title, String content, int nno) {
+	public int updateNotice(Connection conn, Notice n) {
 		
 		int result = 0;
 		
@@ -189,9 +189,9 @@ public class NoticeDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, title);
-			pstmt.setString(2, content);
-			pstmt.setInt(3, nno);
+			pstmt.setString(1, n.getNoticeTitle());
+			pstmt.setString(2, n.getNoticeContent());
+			pstmt.setInt(3, n.getNoticeNo());
 			
 			result = pstmt.executeUpdate();
 		} catch (SQLException e) {
