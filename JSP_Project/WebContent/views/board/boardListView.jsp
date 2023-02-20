@@ -37,7 +37,7 @@
 		<!-- 글 등록 버튼(로그인한 회원만 보이도록) -->
 		<% if(loginUser != null){ %>
 			<div align="center" style="width: 850px">
-				<a href="<%= contextPath %>/enrollForm.bo" class="btn btn-secondary">글작성</a>
+				<a href="<%= contextPath %>/insert.bo" class="btn btn-secondary">글작성</a>
 				<br><br>
 			</div>
 		<%} %>
@@ -56,7 +56,7 @@
 			<tbody>
 				<% if(list.isEmpty()){ %>
 					<tr>
-						<td colspan="6"">조회된 리스트가 없습니다.</td>
+						<td colspan="6">조회된 리스트가 없습니다.</td>
 					</tr>
 				<%} else{ %>
 					<% for(Board b : list){ %>
@@ -117,17 +117,6 @@
 					<button disabled><%= i %></button>
 				<%} %>
 			<%} %>
-			
-<!-- 			<button>1</button> -->
-<!-- 			<button>2</button> -->
-<!-- 			<button>3</button> -->
-<!-- 			<button>4</button> -->
-<!-- 			<button>5</button> -->
-<!-- 			<button>6</button> -->
-<!-- 			<button>7</button> -->
-<!-- 			<button>8</button> -->
-<!-- 			<button>9</button> -->
-<!-- 			<button>10</button> -->
 			
 			<!-- 현재 요청한 페이지가 마지막페이지가 아닐 경우 + 페이지 이동값 -->
 			<% if(currentPage != maxPage){ %>

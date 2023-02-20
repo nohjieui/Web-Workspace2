@@ -14,6 +14,7 @@ import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
 import com.kh.board.model.vo.Board;
+import com.kh.board.model.vo.Category;
 import com.kh.common.model.vo.PageInfo;
 
 public class BoardDao {
@@ -112,6 +113,36 @@ public class BoardDao {
 		}
 		return list;
 		
+	}
+	
+	public ArrayList<Category> selectCategoryList(Connection conn){
+		
+		// DB로부터 Category를 뽑아와 차곡차곡 하나씩 쌓을예정
+		ArrayList<Category> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectCategoryList");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				list.add(new Category(rset.getInt("CATEGORY_NO"),
+									  rset.getString("CATEGORY_NAME"))
+									  );
+			}	
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 
 }
