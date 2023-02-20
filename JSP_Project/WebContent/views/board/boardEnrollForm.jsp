@@ -42,13 +42,13 @@
 								<option value="<%= c.getCategoryNo() %>"><%= c.getCategoryName() %></option>
 							<%} %>
 							
-							<option value="10">공통</option>
-							<option value="20">운동</option>
-							<option value="30">등산</option>
-							<option value="40">게임</option>
-							<option value="50">낚시</option>
-							<option value="60">요리</option>
-							<option value="70">기타</option>
+<!-- 							<option value="10">공통</option> -->
+<!-- 							<option value="20">운동</option> -->
+<!-- 							<option value="30">등산</option> -->
+<!-- 							<option value="40">게임</option> -->
+<!-- 							<option value="50">낚시</option> -->
+<!-- 							<option value="60">요리</option> -->
+<!-- 							<option value="70">기타</option> -->
 						</select>
 					</td>
 				</tr>

@@ -145,11 +145,11 @@ public class BoardListController extends HttpServlet {
 		// 내가 원하는 페이지의 게시글 목록만 가져오기 위해 selectList() 매개변수로 pi객체 넣어줌
 		ArrayList<Board> list = new BoardService().selectList(pi);
 		
-//		request.setAttribute("pi", pi);
-//		request.setAttribute("list", list);
+		request.setAttribute("pi", pi);
+		request.setAttribute("list", list);
 		
-		System.out.println(pi);
-		System.out.println(list);
+//		System.out.println(pi);
+//		System.out.println(list);
 		
 		request.getRequestDispatcher("views/board/boardListView.jsp").forward(request, response);
 		

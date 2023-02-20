@@ -21,7 +21,8 @@
 	 <%@ include file="../common/menubar.jsp" %>
 	 <div class="outer">
 	 	<br>
-	 	<h2 align="left">회원가입</h2>	 
+	 	<h2 align="center">회원가입</h2>
+	 	<br>
 	 	<form id="enroll-form" action="<%= contextPath%>/insert.me" method="post">
 	 		  <!-- 아이디, 비밀번호, 이름, 전화번호, 이메일, 주소, 취미 -->
             <table>

@@ -34,7 +34,7 @@
 				<a href="<%= contextPath %>/enrollForm.no" class="btn btn-secondary" >글작성</a>
 			</div>
 		<%} %>
-
+		<br>
 		<table class="list-area" align="center">
 			<thead>			
 				<tr>
@@ -64,5 +64,16 @@
 			</tbody>
 		</table>
 	</div>
+	
+	<script>
+		$(function(){
+			$(".list-area>tbody>tr").click(function(){
+				
+				let nno = $(this).children().eq(0).text();
+				
+				location.href = "<%= contextPath %>/detail.no?nno="+nno;
+			})
+		})
+	</script>
 </body>
 </html>

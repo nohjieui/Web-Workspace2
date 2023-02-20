@@ -70,30 +70,6 @@
 						</tr>
 					<%} %>
 				<%} %>
-<!-- 			<tr>
-					<td>10</td>
-					<td>운동</td>
-					<td>제목</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-27</td>
-				</tr>
-				<tr>
-					<td>11</td>
-					<td>운동</td>
-					<td>제목</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-27</td>
-				</tr>
-				<tr>
-					<td>12</td>
-					<td>운동</td>
-					<td>제목</td>
-					<td>user01</td>
-					<td>100</td>
-					<td>2023-02-27</td>
-				</tr> -->
 			</tbody>
 		</table>
 		
@@ -125,5 +101,17 @@
 			
 		</div>
 	</div>
+	
+	<script>
+		$(function() {
+			$(".list-area>tbody>tr").click(function() {
+				
+				let bno = $(this).children().eq(0).text();
+				
+				location.href = "<%= contextPath %>/detail.bo?bno="+bno;
+				
+			})
+		});
+	</script>
 </body>
 </html>

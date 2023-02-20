@@ -49,7 +49,7 @@ public class NoticeDao {
 			
 			rset = pstmt.executeQuery();
 			
-			if(rset.next()) {
+			while(rset.next()) {
 				Notice n = new Notice(rset.getInt("NOTICE_NO"),
 									  rset.getString("NOTICE_TITLE"),
 									  rset.getString("USER_ID"),
@@ -92,6 +92,62 @@ public class NoticeDao {
 		}
 		return result;
 		
+	}
+	
+	public int increaseCount(Connection conn, int nno) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("increaseCount");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, nno);
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public Notice selectNotice(Connection conn, int nno) {
+		
+		Notice n = null;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectNotice");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, nno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				n = new Notice(rset.getInt("NOTICE_NO"),
+							   rset.getString("NOTICE_TITLE"),
+							   rset.getString("NOTICE_CONTENT"),
+							   rset.getString("USER_NO"),
+							   rset.getDate("CREATE_DATE")
+							   );
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(rset);
+			close(pstmt);
+		}
+		return n;
 	}
 }
 

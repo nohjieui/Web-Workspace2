@@ -8,18 +8,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.notice.model.service.NoticeService;
+import com.kh.notice.model.vo.Notice;
 
 /**
- * Servlet implementation class NoticeInserController
+ * Servlet implementation class NoticeDetailController
  */
-@WebServlet("/insert.no")
-public class NoticeInserController extends HttpServlet {
+@WebServlet("/detail.no")
+public class NoticeDetailController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeInserController() {
+    public NoticeDetailController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,31 +29,31 @@ public class NoticeInserController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+
+		int nno = Integer.parseInt(request.getParameter("nno"));
+		
+		// 조회수 증가용 서비스
+		int result = new NoticeService().increaseCount(nno);
+		
+		// 조회수 증가에 성공했다면 포워딩
+		if(result > 0) {
+			Notice n = new NoticeService().selectNotice(nno);
+			
+			request.setAttribute("n", n);
+			
+			request.getRequestDispatcher("views/notice/noticeDetailView.jsp").forward(request, response);
+		}else {
+			request.setAttribute("errorMsg", "공지사항 조회 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
+		}
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		request.setCharacterEncoding("UTF-8");
-		
-		int userNo = Integer.parseInt(request.getParameter("userNo"));
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		
-		int result = new NoticeService().insertNotice(title, content, userNo);
-		
-		if(result > 0) {
-			 request.getSession().setAttribute("alertMsg", "공지사항이 등록되었습니다.");
-			 
-			 response.sendRedirect(request.getContextPath()+"/list.no");
-		} else {
-			request.getSession().setAttribute("errorMsg", "공지사항 등록 실패");
-		}
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
