@@ -55,14 +55,50 @@
 	
 	<entry key="selectBoard">
 		SELECT BOARD_NO,
-			   CATEGORY_NO,
+			   CATEGORY_NAME,
 			   BOARD_TITLE,
 			   BOARD_CONTENT,
 			   USER_ID,
 			   CREATE_DATE
 		FROM BOARD B
+		JOIN CATEGORY USING(CATEGORY_NO)
 		JOIN MEMBER M ON (BOARD_WRITER = USER_NO)
 		WHERE BOARD_NO = ?
 		  AND B.STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectAttachment">
+		SELECT FILE_NO,
+			   ORIGIN_NAME,
+			   CHANGE_NAME,
+			   FILE_PATH,
+			   NVL(FILE_LEVEL , 0) AS FILE_LEVEL
+		FROM ATTACHMENT
+		WHERE REF_BNO = ?
+		ORDER BY FILE_LEVEL
+	</entry>
+	
+	<entry key="updateBoard">
+		UPDATE BOARD
+		SET BOARD_TITLE = ?,
+			BOARD_CONTENT = ?,
+			CATEGORY_NO = ?
+		WHERE BOARD_NO = ?
+		  AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="updateAttachment">
+		UPDATE ATTACHMENT
+		SET ORIGIN_NAME = ?,
+			CHANGE_NAME = ?,
+			FILE_PATH = ?,
+			UPLOAD_DATE = SYSDATE
+		WHERE REF_BNO = ?
+		  AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="insertUpdateAttachment">
+		INSERT INTO ATTACHMENT(FILE_NO, REF_BNO, ORIGIN_NAME, CHANGE_NAME, FILE_PATH, UPLOAD_DATE)
+		VALUES (SEQ_FNO.NEXTVAL, ?, ?, ?, ?, SYSDATE)
 	</entry>
 </properties>

@@ -63,7 +63,7 @@ public class BoardInsertController extends HttpServlet {
 		 * 폼 전송시 일반 방식이 아니라 multipart/form-date로 전송하는 경우
 		 * request로부터 값을 뽑아낼 수 없다.
 		 * 
-		 * multipart라는 객체ㅐ에 값을 이관시켜서 다뤄줘야함
+		 * multipart라는 객체에 값을 이관시켜서 다뤄줘야함
 		 */
 		
 		// enctype이 multipart/form-date로 전송되었는지 확인
@@ -93,7 +93,7 @@ public class BoardInsertController extends HttpServlet {
 			 * 2. 전달된 파일명 수정 및 서버에 업로드 작업
 			 * - HttpServletRequest request => MultipartRequest multi 로 변환
 			 * 
-			 * 매개변수 생성사로 생성(cos.jar에서 제공하는 객체)
+			 * 매개변수 생성자로 생성(cos.jar에서 제공하는 객체)
 			 * MultipartRequest multi = new MultipartRequest(request 객체, 저장할 폴더 경로, 용량제한, 인코딩값, 파일명을 수정시켜주는 객체);
 			 * 
 			 * 위 구문 한줄 실행만으로 넘어온 첨부파일들이 해당 폴더에 업로드됨

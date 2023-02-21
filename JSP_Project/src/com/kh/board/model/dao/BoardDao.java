@@ -238,7 +238,7 @@ public class BoardDao {
 			
 			if(rset.next()) {				
 				b = new Board(rset.getInt("BOARD_NO"),
-							  rset.getString("CATEGORY_NO"),
+							  rset.getString("CATEGORY_NAME"),
 							  rset.getString("BOARD_TITLE"),
 							  rset.getString("BOARD_CONTENT"),
 							  rset.getString("USER_ID"),
@@ -252,6 +252,124 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return b;
+	}
+	
+	public Attachment selectAtachment(Connection conn, int bno) {
+		
+		Attachment at = null;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+//				at = new Attachment(rset.getInt("FILE_NO"),
+//									rset.getInt("REF_BNO"),
+//									rset.getString("ORIGIN_NAME"),
+//									rset.getString("CHANGE_NAME"),
+//									rset.getString("FILE_PATH"),
+//									rset.getDate("UPLOAD_DATE"),
+//									rset.getInt("FILE_LEVEL"),
+//									rset.getString("STATUS"));
+				
+//				set방식으로 객체 초기화
+				at = new Attachment();
+				
+				at.setFileNo(rset.getInt("FILE_NO"));
+				at.setOrignName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+				
+				at.setFileLevel(rset.getInt("FILE_LEVEL"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return at;
+		
+	}
+	
+	public int updateBoard(Connection conn, Board b) {
+		
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("updateBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, b.getBoardTitle());
+			pstmt.setString(2, b.getBoardContent());
+			pstmt.setInt(3, Integer.parseInt(b.getCategory()));
+			pstmt.setInt(4, b.getBoardNo());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		close(pstmt);
+		
+		return result;
+	}
+	
+	public int updateAttachment(Connection conn, Attachment at) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, at.getOrignName());
+			pstmt.setString(2, at.getChangeName());
+			pstmt.setString(3, at.getFilePath());
+			pstmt.setInt(4, at.getRefBno());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public int insertUpdateAttachment(Connection conn, Attachment at) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("insertUpdateAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, at.getRefBno());
+			pstmt.setString(2, at.getOrignName());
+			pstmt.setString(3, at.getChangeName());
+			pstmt.setString(4, at.getFilePath());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			close(pstmt);
+		}
+		return result;
 		
 	}
 }

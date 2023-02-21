@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.service.BoardService;
+import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 
 /**
@@ -32,28 +33,24 @@ public class BoardDetailController extends HttpServlet {
 
 		// 클릭했을 때 게시판 글 가져오기
 		int bno = Integer.parseInt(request.getParameter("bno"));
-		/*
-		 * SELECT *
-		 * FROM BOARD
-		 * WHERE BOARD_NO = ${bno}
-		 */
 		
-		// 조회수 증가용 서비스
-		/*
-		 * UPDATE BOARD SET
-		 * COUNT = COUNT + 1
-		 * WHERE BOARD_NO = ${bno}
-		 */
-		int result = new BoardService().increaseCount(bno);
+		BoardService bService = new BoardService();
+
+		// 조회수 증가 / 게시글 조회(Board) / 첨부파일 조회(Attachment)
+		int result = bService.increaseCount(bno);
+		
 		
 		// 조회수 증가에 성공했을 때
-		if(result > 0) {
-			Board b = new BoardService().selectBoard(bno);
+		if(result > 0) { // 유효한 게시글일때 => 게시글정보, 첨부파일을 조회해서 request 영역안에 담은 후에, 상세페이지로 포워딩
+			Board b = bService.selectBoard(bno);
+			Attachment at = bService.selectAtachment(bno);
+			
 			request.setAttribute("b", b);
+			request.setAttribute("at", at);
 			
 			request.getRequestDispatcher("views/board/boardDetailView.jsp").forward(request, response);
-		}else {
-			request.setAttribute("errorMsg", "게시글 조회 실패");
+		}else { // 조회수 증가 실패시
+			request.setAttribute("errorMsg", "게시글 상세조회 실패");
 			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 	}

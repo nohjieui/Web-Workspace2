@@ -1,4 +1,4 @@
-package com.kh.notice.controller;
+package com.kh.board.controller;
 
 import java.io.IOException;
 import javax.servlet.ServletException;
@@ -7,19 +7,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.notice.model.service.NoticeService;
+import com.kh.board.model.service.BoardService;
+import com.kh.member.model.vo.Member;
 
 /**
- * Servlet implementation class NoticeDeleteController
+ * Servlet implementation class BoardDeleteController
  */
-@WebServlet("/delete.no")
-public class NoticeDeleteController extends HttpServlet {
+@WebServlet("/delete.bo")
+public class BoardDeleteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeDeleteController() {
+    public BoardDeleteController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -28,31 +29,26 @@ public class NoticeDeleteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+		int bno = Integer.parseInt(request.getParameter("bno"));
+
+		int result = new BoardService().deleteBoard(bno);
 		
-		int nno = Integer.parseInt(request.getParameter("nno"));
-		 
-		int result = new NoticeService().deleteNotice(nno);
-		 
 		if(result > 0) {
-			request.getSession().setAttribute("alertMsg", "공지사항 삭제 성공했습니다.");
-		
-			response.sendRedirect(request.getContextPath()+"/list.no");
-		} else {
-			request.getSession().setAttribute("alertMsg", "삭제 실패했습니다.");
+			request.getSession().setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
+			response.sendRedirect(request.getContextPath()+"/list.bo");
+		}else {
+			request.setAttribute("errorMsg", "게시글 삭제 실패");
 		}
-		 
+		
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		
-
-		 
-		 
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }
