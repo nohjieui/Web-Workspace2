@@ -2,8 +2,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
-	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	ArrayList<Board> list = (ArrayList<Board>)request.getAttribute("list");
+	PageInfo pi = (PageInfo)request.getAttribute("pi");
 	
 	int currentPage = pi.getCurrentPage();
 	int startPage = pi.getStartPage();
@@ -72,26 +72,13 @@
 				<%} %>
 			</tbody>
 		</table>
-		
-		<script>
-			$(function(){
-				
-				$(".list-area>tbody>tr").click(function(){
 
-					// 클릭시 해당 공지사항의 글번호를 알아와야함
-					let bno = $(this).children().eq(0).text();
-					
-					location.href = "<%= contextPath %>/detail.bo?bno="+bno;
-				});
-			});
-		</script>
 		
 		<br><br>
 		
 		<!-- 페이징바 영역 -->
-		
 		<div align="center" class="paging-area">
-		
+			
 			<!-- 시작페이지가 첫화면이 아닐 경우 + 페이지 이동값 -->
 			<% if(currentPage != 1){ %>
 				<button onclick="location.href = '<%= contextPath %>/list.bo?currentPage=<%= currentPage -1 %>'">&lt;</button>
@@ -111,7 +98,7 @@
 			<% if(currentPage != maxPage){ %>
 				<button onclick="location.href = '<%= contextPath %>/list.bo?currentPage=<%= currentPage + 1 %>'">&gt;</button>
 			<%} %>
-			
+		
 		</div>
 	</div>
 	
@@ -122,7 +109,6 @@
 				let bno = $(this).children().eq(0).text();
 				
 				location.href = "<%= contextPath %>/detail.bo?bno="+bno;
-				
 			})
 		});
 	</script>

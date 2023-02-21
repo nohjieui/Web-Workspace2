@@ -99,7 +99,7 @@ public class BoardUpdateController extends HttpServlet {
 					at.setFileNo(Integer.parseInt(multi.getParameter("originFileNo")));
 					
 					// 기존의 첨부파일을 삭제
-					new File(savePath+at.getChangeName()).delete();
+					new File(savePath+multi.getParameter("changeFileName")).delete();
 				}else {
 					// 기존에 파일이 없는 경우
 					// Attachment 테이블에 정보를 insert

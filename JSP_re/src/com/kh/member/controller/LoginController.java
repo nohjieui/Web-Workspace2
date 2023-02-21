@@ -46,21 +46,21 @@ public class LoginController extends HttpServlet {
 		String userId = request.getParameter("userId");
 		String userPwd = request.getParameter("userPwd");
 		
-		 Member loginUser = new MemberService().loginMember(userId, userPwd);
+		Member loginUser = new MemberService().loginMember(userId, userPwd);
 		 
-		 if(loginUser == null) {
-			 request.setAttribute("errorMsg", "로그인에 실패 했습니다.");
+		if(loginUser == null) {
+			request.setAttribute("errorMsg", "로그인에 실패 했습니다.");
 			 
-			 request.getRequestDispatcher("views/common/errorMsg.jsp").forward(request, response);	
-		 } else {
-			 HttpSession session = request.getSession();
+			request.getRequestDispatcher("views/common/errorMsg.jsp").forward(request, response);	
+		} else {
+			HttpSession session = request.getSession();
 			 
-			 session.setAttribute("loginUser", loginUser);
+			session.setAttribute("loginUser", loginUser);
 			 
-			 session.setAttribute("alertMsg", "성공적으로 로그인되었습니다.");
+			session.setAttribute("alertMsg", "성공적으로 로그인되었습니다.");
 			 
-			 response.sendRedirect(request.getContextPath());
-		 }
+			response.sendRedirect(request.getContextPath());
+		}
 	}
 
 }
