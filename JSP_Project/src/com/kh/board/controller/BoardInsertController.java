@@ -87,7 +87,7 @@ public class BoardInsertController extends HttpServlet {
 			 * 그리고 결론적으로는 board_upfiles 내부에 파일들이 저장될것이기 때문에 /를 마지막에 붙여줘야한다.
 			 */
 			String savePath = request.getSession().getServletContext().getRealPath("/resources/board_upfiles/");
-			System.out.println(savePath);
+//			System.out.println(savePath);
 			
 			/*
 			 * 2. 전달된 파일명 수정 및 서버에 업로드 작업

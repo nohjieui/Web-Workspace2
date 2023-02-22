@@ -39,8 +39,8 @@
 					<td width="500">
 						<select name="category">
 							<% for(Category c : list){ %>
-								<option value="<%= c.getCategoryNo() %>>"><%= c.getCategoryName() %></option>
-							<% } %>
+								<option value="<%= c.getCategoryNo() %>"><%= c.getCategoryName() %></option>
+							<%} %>
 						</select>
 					</td>
 				</tr>

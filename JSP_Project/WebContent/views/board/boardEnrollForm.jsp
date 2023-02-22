@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>일반게시판 상세조회</title>
+<title>일반게시판 작성 페이지</title>
 <style>
 	#enroll-form>table{border: 1px solid white;}
 	#enroll-form input, #enroll-form textarea {

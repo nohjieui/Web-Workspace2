@@ -73,19 +73,6 @@
 			</tbody>
 		</table>
 		
-		<script>
-			$(function(){
-				
-				$(".list-area>tbody>tr").click(function(){
-
-					// 클릭시 해당 공지사항의 글번호를 알아와야함
-					let bno = $(this).children().eq(0).text();
-					
-					location.href = "<%= contextPath %>/detail.bo?bno="+bno;
-				});
-			});
-		</script>
-		
 		<br><br>
 		
 		<!-- 페이징바 영역 -->
