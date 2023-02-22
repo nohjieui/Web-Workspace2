@@ -137,7 +137,7 @@ public class BoardInsertController extends HttpServlet {
 				at = new Attachment();
 				at.setOrignName(multi.getOriginalFileName("upfile")); // 원본명
 				at.setChangeName(multi.getFilesystemName("upfile")); // 수정명(실제 서버에 업로드 되어있는 파일명)
-				at.setFilePath("resources/board/upfiles/");
+				at.setFilePath("resources/board_upfiles/");
 			}
 			
 			// 4. 서비스 요청

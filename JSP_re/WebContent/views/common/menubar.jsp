@@ -12,6 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<title>Welcome C Class</title>
 <!-- Latest compiled and minified CSS -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 <!-- jQuery library -->
@@ -20,7 +21,6 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<title>Welcome C Class</title>
 <style>
 	#login-form, #user-info{float: right}
 	#user-info a{
@@ -98,16 +98,15 @@
 			}
 		</script>
 		<% } else { %>
-			<!-- 로그인 성공 후 : 로그인창 없는 상태-->
+			<!-- 로그인 성공 후 -->
 			<div id="user-info">
-				<b><%= loginUser.getUserName() %>님 환영합니다.</b>
-				<br><br>
+				<b><%= loginUser.getUserName() %></b>님 환영합니다. <br><br>
 				<div align="center">
-					<a href="<%= contextPath %>/myPage.me">마이페이지</a>
+					<a href="<%= contextPath %>/mypage.me">마이페이지</a>
 					<a href="<%= contextPath %>/logout.me">로그아웃</a>
 				</div>
 			</div>
-		<%} %>
+		<% } %>
 	</div>
 
 	

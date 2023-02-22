@@ -69,7 +69,7 @@ public class BoardUpdateController extends HttpServlet {
 			// 2. 전달된 파일명 수정작업 후 서버에 업로드
 			MultipartRequest multi = new MultipartRequest(request, savePath, MaxSize, "UTF-8", new MyFileRenamePolicy());
 			// 3. 본격적으로 sql문 실행시 필요한 값들 셋팅
-			
+			// - Board테이블에 update시 필요한 값들 셋팅
 			int bno = Integer.parseInt(multi.getParameter("bno"));
 			String category = multi.getParameter("category");
 			String title = multi.getParameter("title");
@@ -89,7 +89,7 @@ public class BoardUpdateController extends HttpServlet {
 				at = new Attachment();
 				at.setOrignName(multi.getOriginalFileName("upfile"));
 				at.setChangeName(multi.getFilesystemName("upfile"));
-				at.setFilePath("resources/board/upfiles/");
+				at.setFilePath("resources/board_upfiles/");
 				
 				// 첨부파일이 원래 등록되어 있을 경우, 원본파일의 파일번호, 수정된 이름을 <input type="hidden">으로 넘겨받았음
 				if(multi.getParameter("originFileNo") != null) {

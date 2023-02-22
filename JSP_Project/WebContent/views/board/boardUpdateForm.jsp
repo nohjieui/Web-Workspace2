@@ -41,10 +41,31 @@
 					<td width="500">
 						<select name="category">
 							<% for(Category c : list){ %>
-								<option value="<%= c.getCategoryNo() %>"><%= c.getCategoryName() %></option>
+								<option value="<%= c.getCategoryNo() %>"
+								
+<%--  								<% if(c.getCategoryName().equals(b.getCategory())){ %>
+									selected="selected"
+								<%} %> --%>
+								
+								><%= c.getCategoryName() %></option>
 							<%} %>
 							<!-- 내가 선택한 카테고리가 자동으로 선택되어 있도록 작업해주기(js활용) -->
 						</select>
+						
+						<script>
+							$(function(){
+								$("#update-form option").each(function(){
+									/*
+										현재 반복을 진행중인 option 태그의 text값과
+										db에서 가져온 categoryname값이 일치하는경우 선택되도록
+									*/
+									if($(this).text().trim() == "<%= b.getCategory() %>"){
+										// 일치하는 경우에만 option태그를 선택상태로 변경
+										$(this).attr("selected", true);
+									}
+								})
+							});
+						</script>
 					</td>
 				</tr>
 				<tr>
@@ -60,7 +81,7 @@
 					<td>
 						<% if(at != null){ %>
 							<%= at.getOrignName() %>
-							원본파일의 파일번호, 수정명을 hidden으로 함께 전송할 예정
+							<!-- 원본파일의 파일번호, 수정명을 hidden으로 함께 전송할 예정 -->
 							<input type="hidden" name="originFileNo" value="<%= at.getFileNo() %>" >
 							<input type="hidden" name="changhFileName" value="<%= at.getChangeName() %>" >
 						<% } %>
@@ -76,14 +97,6 @@
 			</div>
 		</form>
 	</div>
-	<script>
-		$(function(){
-			$(("select[name=category]").val()).change(function(){
-			 
-				
-			})
-			
-		});
-	</script>
+
 </body>
 </html>

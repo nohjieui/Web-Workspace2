@@ -41,10 +41,10 @@
 		
 		<div align="center">
 			<a href="<%= contextPath %>/list.no" class="btn btn-secondary">목록</a>
-			
-			<% if(loginUser != null && loginUser.getUserId().equals(n.getNoticeWriter())){ %>
+			<% if(loginUser != null && loginUser.getUserNo() == Integer.parseInt(n.getNoticeWriter()) ) { %>
 				<a href="<%= contextPath %>/updateForm.no?nno=<%= n.getNoticeNo() %>" class="btn btn-warning btn-sm">수정</a>
-				<a href="<%= contextPath %>/delete.no?nno=<%= n.getNoticeNo() %>" class="btn btn-danger btn-sm">삭제</a>			<%} %>
+				<a href="<%= contextPath %>/delete.no?nno=<%= n.getNoticeNo() %>" class="btn btn-danger btn-sm">삭제</a>
+			<% } %>
 		</div>
 	</div>
 </body>

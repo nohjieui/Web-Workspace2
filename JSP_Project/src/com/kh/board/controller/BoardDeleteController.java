@@ -1,5 +1,6 @@
 package com.kh.board.controller;
 
+import java.io.File;
 import java.io.IOException;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.service.BoardService;
+import com.kh.board.model.vo.Attachment;
 import com.kh.member.model.vo.Member;
 
 /**
@@ -31,14 +33,25 @@ public class BoardDeleteController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		int bno = Integer.parseInt(request.getParameter("bno"));
+		int userNo = ((Member)request.getSession().getAttribute("loginUser")).getUserNo();
 
-		int result = new BoardService().deleteBoard(bno);
+		Attachment at = new BoardService().selectAtachment(bno);
+		System.out.println(at);
+		int result = new BoardService().deleteBoard(bno, userNo, at);
 		
 		if(result > 0) {
+			// 삭제처리
+			if(at != null) {
+				String savePath = request.getSession().getServletContext().getRealPath(at.getFilePath());
+				System.out.println(at);
+				new File(savePath+at.getChangeName()).delete();
+			}
+			
 			request.getSession().setAttribute("alertMsg", "성공적으로 게시글이 삭제되었습니다.");
 			response.sendRedirect(request.getContextPath()+"/list.bo");
 		}else {
 			request.setAttribute("errorMsg", "게시글 삭제 실패");
+			request.getRequestDispatcher("views/common/errorPage.jsp").forward(request, response);
 		}
 		
 	}
