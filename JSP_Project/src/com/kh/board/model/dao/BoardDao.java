@@ -35,6 +35,11 @@ public class BoardDao {
 		}
 	}
 	
+	/**
+	 * 총 게시글 조회
+	 * @param conn
+	 * @return
+	 */
 	public int selectListCount(Connection conn) {
 		
 		int listCount = 0;
@@ -70,6 +75,12 @@ public class BoardDao {
 		return listCount;
 	}
 	
+	/**
+	 * 일반게시판 리스트 조회
+	 * @param conn
+	 * @param pi
+	 * @return
+	 */
 	public ArrayList<Board> selectList(Connection conn, PageInfo pi){
 		
 		ArrayList<Board> list = new ArrayList<>();
@@ -116,6 +127,12 @@ public class BoardDao {
 		
 	}
 	
+	
+	/**
+	 * 카테고리 리스트
+	 * @param conn
+	 * @return
+	 */
 	public ArrayList<Category> selectCategoryList(Connection conn){
 		
 		// DB로부터 Category를 뽑아와 차곡차곡 하나씩 쌓을예정
@@ -146,6 +163,12 @@ public class BoardDao {
 		return list;
 	}
 	
+	/**
+	 * 일반게시판 작성 - 게시글 insert
+	 * @param conn
+	 * @param b
+	 * @return
+	 */
 	public int insertBoard(Connection conn, Board b) {
 		
 		int result = 0;
@@ -171,6 +194,12 @@ public class BoardDao {
 		return result;
 	}
 	
+	/**
+	 * 일반게시판 작성 - 첨부파일 insert
+	 * @param conn
+	 * @param at
+	 * @return
+	 */
 	public int insertAttachment(Connection conn, Attachment at) {
 		
 		int result = 0;
@@ -196,6 +225,12 @@ public class BoardDao {
 		
 	}
 
+	/**
+	 * 조회수 증가 서비스
+	 * @param conn
+	 * @param bno
+	 * @return
+	 */
 	public int increaseCount(Connection conn, int bno) {
 		
 		int result = 0;
@@ -474,8 +509,115 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return result;
+	}
+	
+	
+	/**
+	 * 사진게시판 조회
+	 * @param Connection
+	 * @return ArrayList<Board>
+	 */
+	public ArrayList<Board> selectThumbnailList(Connection conn){
 		
+		ArrayList<Board> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectThumbnailList");
 		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				
+				Board b = new Board();
+
+				b.setBoardNo(rset.getInt("BOARD_NO"));
+				b.setBoardTitle(rset.getString("BOARD_TITLE"));
+				b.setCount(rset.getInt("COUNT"));
+				b.setTitleImg(rset.getString("FILE_PATH")+rset.getString("CHANGE_NAME"));
+				
+				list.add(b);
+
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+	}
+	
+	public Board selectThumbnailBoard(Connection conn, int bno) {
+		
+		Board b = new Board();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectThumbnailBoard");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				
+				b.setBoardTitle(rset.getString("BOARD_TITLE"));
+				b.setBoardWriter(rset.getString("USER_ID"));
+				b.setBoardContent(rset.getString("BOARD_CONTENT"));
+				b.setCreateDate(rset.getDate("CREATE_DATE"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return b;
+		
+	}
+	
+	public ArrayList<Attachment> selectThumbnailAttachment(Connection conn, int bno){
+		
+		ArrayList<Attachment> list = new ArrayList<>();
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectThumbnailAttachment");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Attachment at = new Attachment();
+				
+				at.setOrignName(rset.getString("ORIGIN_NAME"));
+				at.setChangeName(rset.getString("CHANGE_NAME"));
+				at.setFilePath(rset.getString("FILE_PATH"));
+				at.setFileLevel(rset.getInt("FILE_LEVEL"));
+				
+				list.add(at);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
 	}
 }
 
