@@ -71,7 +71,7 @@
 			// 3. 요청에 대한 서버 응답을 처리할 함수를 지정
 			// xhr객체의 onreadystatechange속성에 이벤트핸들러를 추가
 			// xhr객체의 상태를 관리해주는 속성
-			// 1) readystate : 전송상태를 관리
+			// 1) readyState : 전송상태를 관리
 			// 2) status : 응답결과를 관리
 			xhr.onreadystatechange = function(){
 				

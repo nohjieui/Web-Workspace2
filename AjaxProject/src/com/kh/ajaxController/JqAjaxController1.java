@@ -30,7 +30,7 @@ public class JqAjaxController1 extends HttpServlet {
 		String input = request.getParameter("input");
 		
 		// 응답할 데이터 설정
-		String responseData = "입력된 값 : "+input+", 길이 : "+input.length();
+		String responseData = "입력된 값 : "+ input + ", 길이 : "+ input.length();
 		
 		// 응답데이터에 한글이 있을 경우 대비해서 인코딩 설정
 		response.setContentType("text/html; charset=UTF-8");

@@ -30,13 +30,11 @@ public class JsAjaxController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 		String userId = request.getParameter("id");
-		
-		// 인코딩 설정
+
 		response.setCharacterEncoding("UTF-8");
 		
-		// 사용자에게 출력스트림 열어주기
-		PrintWriter out =  response.getWriter();
-		out.print("ajax에 대한 응답 결과 : "+ userId);
+		PrintWriter out = response.getWriter();
+		out.print("ajax에 대한 응답 결과 : "+userId);
 	}
 
 	/**

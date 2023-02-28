@@ -38,13 +38,11 @@ public class JqAjaxController2 extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-//		request.setCharacterEncoding("UTF-8");
-		
 		String name = request.getParameter("name");
-		int age = Integer.parseInt(request.getParameter("age"));
+		String age = request.getParameter("age");
 		
 		// ajax는 결과를 딱 한개만 응답할 수 있음
-		// 요청처리를 다 했다는 가정하에 응답할 데이터를 "문자열" 형태로 셋팅
+		// 요청 처리를 다 했다는 가정하에 응답할 데이터를 "문자열" 형태로 셋팅
 		
 		// 버전 1)
 //		String responseData = "이름 : "+name+", 나이 : "+age;
@@ -67,16 +65,16 @@ public class JqAjaxController2 extends HttpServlet {
 		 *   2. JSONObject{key:value, key:value} : 객체형태
 		 */
 		// 1. JSONArray
-//		JSONArray jArr = new JSONArray(); //[]
+//		JSONArray jArr = new JSONArray(); // []
 //		jArr.add(name); // ["노지의"]
 //		jArr.add(age); // ["29"]
-//		
+		
 //		// 응답할 데이터의 contentType을 설정. text/html -> 문자열
 //		response.setContentType("application/json; charset=UTF-8");
 //		
 //		response.getWriter().print(jArr);
 		
-		//  2. JSONObject
+		// 2. JSONObject
 		JSONObject jObj = new JSONObject();
 		jObj.put("name", name);
 		jObj.put("age", age);
