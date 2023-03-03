@@ -204,7 +204,50 @@
 	
 	<h3>2. 버튼 클릭시 post방식으로 서버에 데이터 전송 및 응답</h3>
 	
-	이름 : <input type="text" id="input2_1"><br>
+	이름 : <input type="text" id="input2_1">
+	<br>
+	나이 : <input type="text" id="input2_2">
+	<br>
+	<button onclick="test2();">전송</button>
+	<br>
+	응답 : <label id="output2">응답대기중</label>
+	
+	<script>
+		function test2(){
+			$.ajax({
+				url : "<%= contextPath %>/jqAjax2.do",
+				type : 'post',
+				data : {
+					name : $("#input2_1").val(),
+					age : $("#input2_2").val()
+				},
+				success : function(result){
+					console.log(result);
+					
+					// 방법1
+					// $("#output2").text(result);
+					
+					// 방법2
+					$("#output2").text("이름 : "+result[0]+" 나이 : "+result[1]);
+				}
+			})
+		}
+	</script>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+<%-- 	이름 : <input type="text" id="input2_1"><br>
 	나이 : <input type="text" id="input2_2"><br>
 	<button onclick="test2();">전송</button><br>
 	
@@ -214,7 +257,7 @@
 		function test2(){
 			
 			// 버전1) 문자열데이터 응답받기
-<%--  			$.ajax({
+ 			$.ajax({
 				url : "<%= contextPath %>/jqAjax2.do",
 				data : {
 					name : $("#input2_1").val(),
@@ -232,7 +275,7 @@
 					console.log("통신 실패");
 				}
 				
-			}) --%>
+			})
 			
 			// 버전 2)
 			$.ajax({
@@ -256,6 +299,228 @@
 					
 				}
 			})
+		}
+	</script> --%>
+	
+	<h3>3. 서버로 데이터 전송 후, 조회된 객체를 응답데이터로 받기</h3>
+	
+	회원번호 입력 : <input type="number" id="input3">
+	<button onclick="test3();">조회</button>
+	
+	<div id="output3"></div>
+	
+	<script>
+		function test3() {
+			$.ajax({
+				url : "jqAjax3.do",
+				data : { no : $("#input3").val()},
+				success : (result) => {
+					console.log(result);
+					
+					let resultStr = "회원번호 : "+ result.userNo + "<br>"
+								  + "이름 : " + result.userName + "<br>"
+								  + "아이디 : " + result["userId"] + "<br>"
+								  + "주소 : " + result["address"] + "<br>"
+					
+					$("#output3").html(resultStr);
+				},
+				error : function (req, status, error) {
+					console.log(req, status, error)
+				}
+				
+			})
+		}
+	</script>
+	
+	<h3>4. 응답데이터로 여러개의 객체들이 담겨있는 ArrayList받기</h3>
+	
+	<button onclick="test4();">회원정보조회</button>
+	
+	<table id="output4" border="1" style="text-align: center;">
+		<thead>
+			<tr>
+				<th>번호</th>
+				<th>이름</th>
+				<th>아이디</th>
+				<th>주소</th>
+			</tr>
+		</thead>
+		<tbody>
+			
+		</tbody>
+	</table>
+	
+	<script>
+		function test4() {
+			$.ajax({
+				url : "<%= contextPath %>/jqAjax4.do",
+				success : function(result) {
+					let str = "";
+					
+					for(let i = 0; i < result.length; i++){
+						str += "<tr>"
+							  +"<td>"+result[i].userNo+"</td>" // 배열에 접근
+							  +"<td>"+result[i].userName+"</td>"
+							  +"<td>"+result[i]['userId']+"</td>" // 객체의 속성에 접근
+							  +"<td>"+result[i]['address']+"</td>"
+						str + "</tr>";
+					}
+					
+					$("#output4 tbody").html(str);
+				}
+				
+			})
+		}
+	</script>
+	
+	<h2>5. ajax를 활용한 자동완성기능 구현하기</h2>
+
+	<select id="searchType">
+		<option value="1">글제목</option>
+		<option value="2">카테고리</option>
+		<option value="3">내용</option>
+		<option value="4">작성자</option>
+	</select>
+	<br>
+	<input id="keyword" list="list" type="text" placeholder="찾을 게시글을 작성하세요">
+	
+	<select id="list">
+	</select>
+	
+	<script>
+		$(function(){
+			$("#keyword").keyup(function(){
+				$.ajax({
+					url : "<%= contextPath %>/jqAutoSearch.do",
+					data : {
+						keyword : $("#keyword").val(),
+						searchType : $("#searchType").val()
+					},
+					success : function(data){
+						
+						$("#list").html(""); // 리스트 비워주기
+						console.log(data);
+						
+						let str = "";
+						for(let i = 0; i < data.length; i++){
+							str += '<option>'
+								+ data[i].boardTitle
+								+ '</option>'
+						}
+						
+						$("#list").html(str);
+					}
+					
+				})
+			});
+		});
+	</script>
+	
+	<h2>6. Ajax로 html파일 받아오기</h2>
+	
+	<button id="htmlAjax">html문서 받기</button>
+	<div id="htmloutput"></div>
+	
+	<script>
+		$(function(){
+			$("#htmlAjax").click(function(){
+				
+				$.ajax({
+					url : "<%= contextPath%>/jqHtmlTest.do",
+					type : 'post',
+					dataType : 'html', // 없어도 문제없긴한데 간혹가다 문제가 일어나 작성해주는게 좋음
+					success : function(data){
+						console.log(data);
+						$("#htmloutput").html(data);
+					}
+				})
+			});
+		});
+	</script>
+	
+	<h2>7. xml 데이터 가져오기</h2>
+	<button id="xmlTest">xml 데이터 가져오기</button>
+	<div id="fiction">
+		<h2>소설</h2>
+		<table id="fiction-info">
+			
+		</table>
+	</div>
+	<div id="it">
+		<h2>프로그래밍</h2>
+		<table id="it-info">
+			
+		</table>
+	</div>
+	
+	<script>
+		$(function(){
+			$("#xmlTest").click(()=>{
+				$.ajax({
+					url : "books.xml",
+					success : function(data){
+						let ficheader = "<tr><th>제목</th><th>저자</th></tr>";
+						let itheader = ficheader;
+						
+						console.log(data);
+						
+						// let entity = $(data).find("books");
+						let entity = $(data).find(":root");
+						console.log(entity);
+						
+						let books = $(entity).find("book");
+						console.log(books);
+						
+						books.each(function(index, item){
+							let info = "<tr>"
+									 + "<td>" + $(item).find("title").text()+"</td>"
+									 + "<td>" + $(item).find("author").text()+"</td>"
+									 + "</tr>";
+							let subject = $(item).find("subject").text();
+							if(subject == "소설"){
+								ficheader += info;
+							} else if(subject == "프로그래밍"){
+								itheader += info;
+							}
+						})
+						
+						$("#fiction-info").html(ficheader);
+						$("#it-info").html(itheader);
+					}
+				});
+			});
+		});
+	</script>
+	
+	<h2>8. Ajax를 이용한 파일 업로드 처리하기</h2>
+	
+	<input type="file" id="upfile" multiple>
+	<button onclick="sendFile();">파일전송</button>
+	
+	<script>
+		function sendFile() {
+			// 파일 전송시에는 FormData라는 객체를 생성해서 파일을 추가시켜줘야함
+			let form = new FormData();
+			
+// 			console.log($("#upfile")[0], $("#upfile")[0].files[0]);
+// 			form.append("upfile", $("#upfile")[0].files[0])
+			
+			$.each( $("#upfile")[0].files, function (index, file) {
+				console.log(index, file);
+				form.append("upfile"+index, file); // data : form의 key : value
+			});
+			
+			$.ajax({
+				url : "<%= contextPath %>/fileUpload.do",
+				data : form,
+				type : "post",
+				processData : false,
+				contentType : false,
+				success : function(){
+					alert("업로드성공");
+					$("#upfile").val("");
+				}
+			});
 		}
 	</script>
 </body>

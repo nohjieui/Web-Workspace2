@@ -41,6 +41,26 @@ public class JqAjaxController2 extends HttpServlet {
 		String name = request.getParameter("name");
 		String age = request.getParameter("age");
 		
+		response.setContentType("text/html; charset=UTF-8");
+		
+		// 방법1
+//		String responseDate = "이름 : "+name+", 나이 : "+age;
+//		
+//		response.getWriter().print(responseDate);
+		
+		// 방법2
+		JSONArray jArr = new JSONArray();
+		
+		jArr.add(name);
+		jArr.add(age);
+		
+		response.getWriter().print(jArr);
+		
+		
+		
+		
+		
+		
 		// ajax는 결과를 딱 한개만 응답할 수 있음
 		// 요청 처리를 다 했다는 가정하에 응답할 데이터를 "문자열" 형태로 셋팅
 		
@@ -74,14 +94,14 @@ public class JqAjaxController2 extends HttpServlet {
 //		
 //		response.getWriter().print(jArr);
 		
-		// 2. JSONObject
-		JSONObject jObj = new JSONObject();
-		jObj.put("name", name);
-		jObj.put("age", age);
-		
-		response.setContentType("application/json; charset=UTF-8");
-		
-		response.getWriter().print(jObj);
+		/*
+		 * // 2. JSONObject JSONObject jObj = new JSONObject(); jObj.put("name", name);
+		 * jObj.put("age", age);
+		 * 
+		 * response.setContentType("application/json; charset=UTF-8");
+		 * 
+		 * response.getWriter().print(jObj);
+		 */
 		
 	}
 
