@@ -31,7 +31,7 @@ public class JqAjaxController4 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		ArrayList<Member> list = new ArrayList<>();
 		
 		list.add(new Member(1,"노지의", "shwldml", "안산"));

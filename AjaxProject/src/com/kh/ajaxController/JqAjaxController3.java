@@ -31,7 +31,7 @@ public class JqAjaxController3 extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+		
 		int memberNo = Integer.parseInt(request.getParameter("no"));
 		
 		// 데이터 조회를 완료했다는 가정하에 Member객체에 값을 담기
@@ -44,15 +44,15 @@ public class JqAjaxController3 extends HttpServlet {
 		// m변수에 toString()메소드가 호출되면서 문자열이 넘어가게됨
 		//response.getWriter().print(m);
 		
+		// 인코딩설정
+		response.setContentType("application/json; charset=UTF-8");
+		
 		// {속성 : 속성값, 속성 : 속성값}
 //		JSONObject jobj = new JSONObject();
 //		jobj.put("userNo", m.getUserNo()); // {userNo : 50}
 //		jobj.put("userName", m.getUserName()); // {userNo : 50, userName : "노지의"}
 //		jobj.put("userId", m.getUserId());
 //		jobj.put("address", m.getAddress());
-		
-		// 인코딩설정
-		response.setContentType("application/json; charset=UTF-8");
 		
 //		response.getWriter().print(jobj);
 		
@@ -66,7 +66,6 @@ public class JqAjaxController3 extends HttpServlet {
 		
 		// 응답할 객체에 vo객체 하나만 제시하면 JSONObject형태로 만들어져서 응답
 		// ArrayList로 지정시 JSONArray형태로 만들어져서 응답
-		
 		
 		
 	}

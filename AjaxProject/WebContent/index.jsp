@@ -141,7 +141,7 @@
 		* 부수적인 속성
 		- async : 서버와의 비동기 처리방식 설정 여부(기본값 true)
 		- contentType : request의 데이터 인코딩 방식 정의(보내는 측의 데이터 인코딩)
-		- dateType : response로 오는 데이터의 자료행 설정(값을 추가안하면 스마트하게 판단함)
+		- dataType : response로 오는 데이터의 자료행 설정(값을 추가안하면 스마트하게 판단함)
 					 text : String데이터
 					 xml : 트리형태의 구조
 					 json : 앱 형태의 구조(일반적인 데이터 구조)
@@ -204,50 +204,7 @@
 	
 	<h3>2. 버튼 클릭시 post방식으로 서버에 데이터 전송 및 응답</h3>
 	
-	이름 : <input type="text" id="input2_1">
-	<br>
-	나이 : <input type="text" id="input2_2">
-	<br>
-	<button onclick="test2();">전송</button>
-	<br>
-	응답 : <label id="output2">응답대기중</label>
-	
-	<script>
-		function test2(){
-			$.ajax({
-				url : "<%= contextPath %>/jqAjax2.do",
-				type : 'post',
-				data : {
-					name : $("#input2_1").val(),
-					age : $("#input2_2").val()
-				},
-				success : function(result){
-					console.log(result);
-					
-					// 방법1
-					// $("#output2").text(result);
-					
-					// 방법2
-					$("#output2").text("이름 : "+result[0]+" 나이 : "+result[1]);
-				}
-			})
-		}
-	</script>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-<%-- 	이름 : <input type="text" id="input2_1"><br>
+	이름 : <input type="text" id="input2_1"><br>
 	나이 : <input type="text" id="input2_2"><br>
 	<button onclick="test2();">전송</button><br>
 	
@@ -257,7 +214,7 @@
 		function test2(){
 			
 			// 버전1) 문자열데이터 응답받기
- 			$.ajax({
+<%--  			$.ajax({
 				url : "<%= contextPath %>/jqAjax2.do",
 				data : {
 					name : $("#input2_1").val(),
@@ -275,7 +232,7 @@
 					console.log("통신 실패");
 				}
 				
-			})
+			}) --%>
 			
 			// 버전 2)
 			$.ajax({
@@ -300,7 +257,7 @@
 				}
 			})
 		}
-	</script> --%>
+	</script>
 	
 	<h3>3. 서버로 데이터 전송 후, 조회된 객체를 응답데이터로 받기</h3>
 	
@@ -473,8 +430,8 @@
 						
 						books.each(function(index, item){
 							let info = "<tr>"
-									 + "<td>" + $(item).find("title").text()+"</td>"
-									 + "<td>" + $(item).find("author").text()+"</td>"
+									 	+ "<td>" + $(item).find("title").text()+"</td>"
+									 	+ "<td>" + $(item).find("author").text()+"</td>"
 									 + "</tr>";
 							let subject = $(item).find("subject").text();
 							if(subject == "소설"){
