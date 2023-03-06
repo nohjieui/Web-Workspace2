@@ -36,7 +36,11 @@ public class AjaxReplyInsertController extends HttpServlet {
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		String replyWriter = ((Member)request.getSession().getAttribute("loginUser")).getUserNo()+"";
 
-		ReplyBuilder rb = new ReplyBuilder.Builder(1).setReplyContent("댓글내용").setRefBno(1).build();
+		ReplyBuilder rb = new ReplyBuilder
+							  .Builder(1)
+							  .setReplyContent("댓글내용")
+							  .setRefBno(1)
+							  .build();
 		
 		Reply r = new Reply();
 		r.setRefBno(bno);

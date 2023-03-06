@@ -11,8 +11,8 @@ public class ReplyBuilder {
 	 * 		1. 생성자를 이용한 객체 생성
 	 * 		   객체를 생성할 때 생성자에 매개변수로 데이터를 넣어줘서 객체를 생성하는 방식
 	 * 		   단점? 1) 인자들이 많을수록 생성자가 많아질 수 있다.
-	 * 				ex) Member 클래스의 생성자로(로그인 했을 때의 정보를 담을수 있는 객체, 회원가입용 생성자, 로그인요청시 담을 생성자 등등)
-	 * 				생성자는 딱 필요로하는 데이터만 담고있는게 좋으므로 그에 맞는 생성자가 많이 필요해지게됨
+	 * 				ex) Member 클래스의 생성자로(로그인 했을 때의 정보를 담을수 있는 객체, 회원가입용 생성자, 로그인요청 생성자 등등)
+	 * 				생성자는 딱 필요로하는 데이터만 담고있는게 좋으므로 그에 맞는 생성자가 많이 필요해지게 된다.
 	 * 				2) 매개변수의 정보를 설명할 수 없기 때문에 잘못된 위치에 데이터를 추가하게될 가능성이 있다.
 	 * 		   		ex) email데이터가 추가되어야할 부분에 address가 추가된다던가 하는등...
 	 * 
@@ -25,7 +25,7 @@ public class ReplyBuilder {
 	 * 			1) 불필요한 생성자 제거
 	 * 			2) 데이터의 순서와 상관없이 객체 생성 가능
 	 * 			3) 명시적으로 선언하여 가독성이 좋고
-	 * 			4) 각 인가자 어떤 데이터인지 확인할 수가 있음
+	 * 			4) 각 인자가 어떤 데이터인지 확인할 수가 있음
 	 * 			5) setter함수를 만들지 않으므로 변경불가능한 객체를 생성할 수 있다.(객체의 일관성 유지)
 	 * 
 	 */
@@ -42,7 +42,7 @@ public class ReplyBuilder {
 		
 		private int replyNo; // 필수로 받아야할 정보
 		private String replyContent; // 선택적으로 받아야할 정보
-		private int refBno; // 선택적으로 받아야할 ㅓ정보
+		private int refBno; // 선택적으로 받아야할 정보
 		
 		// 필수로 받아야할 정보는 생성자로 값을 전달해줌
 		public Builder(int replyNo) {
@@ -65,9 +65,9 @@ public class ReplyBuilder {
 		public ReplyBuilder build() {
 			
 			ReplyBuilder rb = new ReplyBuilder();
-			rb.replyNo = this.refBno;
+			rb.replyNo = this.replyNo;
 			rb.replyContent = this.replyContent;
-			rb.refBno = this.replyNo;
+			rb.refBno = this.refBno;
 			
 			return rb;
 		}
