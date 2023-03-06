@@ -114,6 +114,15 @@ public class MemberService {
 		return result;
 	}
 	
-	
+	public String selectId(String checkId) {
+		
+		Connection conn = JDBCTemplate.getConnection();
+		
+		String id = new MemberDao().selectId(conn, checkId);
+		
+		JDBCTemplate.close(conn);
+		
+		return id;
+	}
 }
 

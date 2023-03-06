@@ -61,4 +61,9 @@
 		WHERE USER_ID = ?
 		  AND USER_PWD = ?
 	</entry>
+	<entry key="selectId">
+		SELECT USER_ID
+		FROM MEMBER
+		WHERE USER_ID = ?
+	</entry>
 </properties> 

@@ -346,7 +346,7 @@
 	
 	<script>
 		$(function(){
-			$("#keyword").keyup(function(){
+			$("#keyword").keyup(function(e){
 				$.ajax({
 					url : "<%= contextPath %>/jqAutoSearch.do",
 					data : {

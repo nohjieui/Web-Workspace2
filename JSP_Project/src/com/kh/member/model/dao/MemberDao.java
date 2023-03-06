@@ -234,4 +234,36 @@ public class MemberDao {
 		}
 		return result;
 	}
+	
+	public String selectId(Connection conn, String checkId) {
+		
+		String id = null;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, checkId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				id = rset.getString("USER_ID");
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			JDBCTemplate.close(rset);
+			JDBCTemplate.close(pstmt);
+		}
+		return id;
+		
+		
+	}
 }

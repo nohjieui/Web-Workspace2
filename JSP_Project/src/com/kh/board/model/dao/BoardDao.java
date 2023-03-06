@@ -16,6 +16,7 @@ import java.util.Properties;
 import com.kh.board.model.vo.Attachment;
 import com.kh.board.model.vo.Board;
 import com.kh.board.model.vo.Category;
+import com.kh.board.model.vo.Reply;
 import com.kh.common.model.vo.PageInfo;
 
 public class BoardDao {
@@ -618,6 +619,61 @@ public class BoardDao {
 			close(pstmt);
 		}
 		return list;
+	}
+	
+	public int insertReply(Connection conn, Reply r) {
+		int result = 0;
+		
+		PreparedStatement pstmt = null;
+		
+		String sql = prop.getProperty("insertReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, r.getReplyContent());
+			pstmt.setInt(2, r.getRefBno());
+			pstmt.setString(3, r.getReplyWriter());
+			
+			result = pstmt.executeUpdate();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+	}
+	
+	public ArrayList<Reply> selectReply(Connection conn, int bno){
+		
+		ArrayList<Reply> list = new ArrayList<>();
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectReply");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, bno);
+			
+			rset = pstmt.executeQuery();
+			
+			while(rset.next()) {
+				Reply r = new Reply(rset.getInt("REPLY_NO"),
+									rset.getString("REPLY_CONTENT"),
+									rset.getString("USER_ID"),
+									rset.getString("CREATE_DATE"));
+				list.add(r);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return list;
+		
 	}
 }
 
