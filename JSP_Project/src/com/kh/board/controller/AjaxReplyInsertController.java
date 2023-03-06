@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.kh.board.model.service.BoardService;
 import com.kh.board.model.vo.Reply;
+import com.kh.board.model.vo.ReplyBuilder;
 import com.kh.member.model.vo.Member;
 
 /**
@@ -35,6 +36,8 @@ public class AjaxReplyInsertController extends HttpServlet {
 		int bno = Integer.parseInt(request.getParameter("bno"));
 		String replyWriter = ((Member)request.getSession().getAttribute("loginUser")).getUserNo()+"";
 
+		ReplyBuilder rb = new ReplyBuilder.Builder(1).setReplyContent("댓글내용").setRefBno(1).build();
+		
 		Reply r = new Reply();
 		r.setRefBno(bno);
 		r.setReplyContent(content);
