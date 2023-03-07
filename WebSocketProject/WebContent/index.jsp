@@ -20,7 +20,7 @@
 	
 	<script>
 		// 웹소켓 서버에 연결
-		// WebSocket 객체 생성하기 192.168.30.174
+		// WebSocket 객체 생성하기 학원 : 192.168.30.174 / 집 : 192.168.0.16
 		// const socket = new WebSocket("ws://ip:port/<%= request.getContextPath() %>/chatting.do");
 		const socket = new WebSocket("ws://192.168.30.174:8082/<%= request.getContextPath() %>/chatting.do");
 		// https://ip:포트번호/~~

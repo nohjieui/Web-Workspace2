@@ -109,6 +109,7 @@
 				location.href = "<%= contextPath %>/enrollForm.me";
 			}
 			
+			// 아이디저장 체크박스 클릭 시 쿠키값 저장
 			function submitLogin(){
 				
 				let userId = $("#login-form input[name=userId]").val();
@@ -116,7 +117,7 @@
 				if($("#saveId").is(":checked")) { // true -> 체크된 상태
 					document.cookie = "saveId="+userId+"; path=/; max-age="+60*60*24; // 쿠키최대 유지시간 설정(1일)
 				} else{ // 체크되지 않고 로그인시, 저장된 쿠키를 삭제
-					document.cookie = "saveId=; path=/; max=age=0" // 최대시간을 0으로 설정해서 해당쿠키를 제거해주기
+					document.cookie = "saveId=; path=/; max-age=0" // 최대시간을 0으로 설정해서 해당쿠키를 제거해주기
 				}
 				
 				$("#login-form").submit();
@@ -129,7 +130,7 @@
 					let index = document.cookie.indexOf("saveId="); // 찾고자하는 쿠키인덱스의 시작값을 얻어옴
 					if(index != -1){ // saveId라는 키값의 쿠키가 있다면
 						index += "saveId=".length;
-						let end = document.cookie.indexOf(";", index);
+						let end = document.cookie.indexOf(";", index); // saveId=가 존재하는 시작위치로부터 ;를 찾겠고 그 인덱스값
 						
 						if(end == -1){ // saveId= 의 키값이 마지막위치라면 ;이 없으므로
 							value = document.cookie.substring(index);
@@ -141,6 +142,7 @@
 					}
 				}
 			}
+			// 페이지가 로딩되었을 때 getCookie()함수 실행되게끔
 			$(function(){
 				getCookie();
 			})
