@@ -1,5 +1,5 @@
 <%@page import="com.kh.board.model.vo.Attachment"%>
-<%@ page import="com.kh.board.model.vo.Board" %>
+<%@ page import="com.kh.board.model.vo.*" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%
@@ -124,6 +124,11 @@
 		</div>
 	</div>
 	<script>
+		$(function(){
+			// 실시간으로 댓글 입력시 화면에 바로 나타나게함
+			setInterval(selectReplyList, 1000);
+		});
+	
 		// 댓글 등록
 		function insertReply(){
 			$.ajax({

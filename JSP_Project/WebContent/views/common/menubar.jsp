@@ -92,7 +92,9 @@
 				</tr>
 				<tr>
 					<th colspan="2">
-						<button>로그인</button>
+						<input type="checkbox" id="saveId"> <label for="saveId">아이디 저장</label>
+<!-- 						<button>로그인</button> -->
+						<button type="button" onclick="submitLogin();">로그인</button>
 						<button type="button" onclick="enrollPage();">회원가입</button>
 					</th>
 				</tr>
@@ -105,7 +107,43 @@
 				
 				// 단순한 정적인 페이지 이동요청이라고해도 반드시 sevlet을 거쳐갈것 => url의 서블릿 매핑값만 노출되도록 하기
 				location.href = "<%= contextPath %>/enrollForm.me";
-			}			
+			}
+			
+			function submitLogin(){
+				
+				let userId = $("#login-form input[name=userId]").val();
+				
+				if($("#saveId").is(":checked")) { // true -> 체크된 상태
+					document.cookie = "saveId="+userId+"; path=/; max-age="+60*60*24; // 쿠키최대 유지시간 설정(1일)
+				} else{ // 체크되지 않고 로그인시, 저장된 쿠키를 삭제
+					document.cookie = "saveId=; path=/; max=age=0" // 최대시간을 0으로 설정해서 해당쿠키를 제거해주기
+				}
+				
+				$("#login-form").submit();
+			}
+			
+			// 로그인 전 아이디 저장 (쿠키에 값이 있는 경우에만)
+			function getCookie(){
+				let value = "";
+				if(document.cookie.length > 0){
+					let index = document.cookie.indexOf("saveId="); // 찾고자하는 쿠키인덱스의 시작값을 얻어옴
+					if(index != -1){ // saveId라는 키값의 쿠키가 있다면
+						index += "saveId=".length;
+						let end = document.cookie.indexOf(";", index);
+						
+						if(end == -1){ // saveId= 의 키값이 마지막위치라면 ;이 없으므로
+							value = document.cookie.substring(index);
+						}else{
+							value = document.cookie.substring(index, end);
+						}
+						$("#login-form input[name=userId]").val(value);
+						$("#saveId").attr("checked",true);
+					}
+				}
+			}
+			$(function(){
+				getCookie();
+			})
 		</script>
 		
 		<% } else { %>
