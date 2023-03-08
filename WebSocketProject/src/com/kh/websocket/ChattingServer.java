@@ -23,7 +23,7 @@ public class ChattingServer {
 	public void open(Session session, EndpointConfig config) {
 
 		System.out.println("클라이언트 접속함");
-		System.out.println(session.getId());
+		System.out.println(session.getId()); // 접속한 회원의 id값 얻어오기
 		clients.put(session.getId(), session);
 		
 	}
@@ -75,14 +75,3 @@ public class ChattingServer {
 		}
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
