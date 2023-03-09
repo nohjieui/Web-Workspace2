@@ -44,8 +44,8 @@
 	<p>
 		* 기존방식 <br>
 		10과 3이 일치합니까 ? : <%= (int)request.getAttribute("big") == (int)request.getAttribute("small") %> <br>
-		sOne과 sTwo가 일치합니까 ? : <%= ((String)request.getAttribute("sOne")).equals((String)request.getAttribute("sTwo")) %>
-							 또는 <%= (String)request.getAttribute("sOne") == (String)request.getAttribute("sTwo") %>
+		sOne과 sTwo가 일치합니까 ? : <%= ((String)request.getAttribute("sOne")).equals((String)request.getAttribute("sTwo")) %>(문자열 비교이기 때문)
+							 또는 <%= (String)request.getAttribute("sOne") == (String)request.getAttribute("sTwo") %>(주소값 비교이기때문)
 	</p>
 	
 	<p>
