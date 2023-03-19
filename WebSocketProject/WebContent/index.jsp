@@ -22,7 +22,7 @@
 		// 웹소켓 서버에 연결
 		// WebSocket 객체 생성하기 학원 : 192.168.30.174 / 집 : 192.168.0.16
 		// const socket = new WebSocket("ws://ip:port/<%= request.getContextPath() %>/chatting.do");
-<%-- 		const socket = new WebSocket("ws://192.168.30.174:8082/<%= request.getContextPath() %>/chatting.do"); --%>
+		const socket = new WebSocket("ws://192.168.30.174:8082/<%= request.getContextPath() %>/chatting.do");
 		const socket = new WebSocket("ws://192.168.30.174:8082/<%= request.getContextPath() %>/chatting2.do");
 		// https://ip:포트번호/~~
 		// http -> ws:~
@@ -67,7 +67,7 @@
 		const sendMsg = () => {
 			// 전송할 메세지 전처리
 			// 전처리한 메세지를 전송하는 방법 : socket.send(데이터);
-			// 발송자, 수신자, 메세지 내용
+			// 천처리를 어떻게? 객체화 시켜줄것임 -> 발송자, 수신자, 메세지내용 형태로
 			/* /chatting.do */
 // 			socket.send( $("#sender").val() + "," + $("#receiver").val() + "," + $("#msg").val() );
 			

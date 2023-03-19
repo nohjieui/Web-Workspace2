@@ -14,12 +14,18 @@ import javax.websocket.server.ServerEndpoint;
 // 일반클래스를 웹소켓 서버로 등록하기 위한 방법
 @ServerEndpoint(value="/chatting.do") // 클래스 선언부에 선언시 웹소켓 서버로 등록해야됨
 public class ChattingServer {
-
+	
 	// 내부에 클라이언트가 요청하는 내용을 처리하는 메소드 등록
 	private static Map<String, Session> clients = new HashMap();
+	/*
+	 * key값 : String , value값 : Session
+	 * Map객체는 동일한 key값으로 값이 오지 못하므로 
+	 * 연결을 요청한 클라이언트의 session id를 key값으로해 Session객체를 value값으로 넣어둘 예정임
+	 */
 	
 	@OnOpen
 	// 접속을 요청한 클라이언트와 연결이 수립되면 실행되는 메소드
+	// (연결이 수립되면 클라이언트에 대한 정보를 위쪽의 clients필드 안쪽에 저장해둘 용도로 사용하고 있음)
 	public void open(Session session, EndpointConfig config) {
 
 		System.out.println("클라이언트 접속함");
@@ -33,7 +39,7 @@ public class ChattingServer {
 	public void message(Session session, String msg) { // "발송자, 수신자, 내용"
 		// 첫번째 매개변수 session객체안에는 메세지를 보낸 클라이언트의 session객체가 담겨있음
 		// 두번째 매개변수 msg에는 클라이언트가 보낸 메세지가 담겨있다.("발송자, 수신자, 내용")
-		System.out.println(session.getId()+"::::::"+msg);
+		System.out.println(session.getId()+"::::::"+msg); // 0::::::a,b,test
 		
 		// 클라이언트가 보낸 메세지를 파싱
 		String[] data = msg.split(",");
@@ -51,6 +57,7 @@ public class ChattingServer {
 		
 		// 3. getBasicRemote로 가져온 객체의 sendText()라는 메소드 실행 -> 메세지를 클라이언트에게 전송
 		
+		// 1. 1) clients.keySet() : clients의 Map객체 안에있는 모든 key값을 꺼내옴 
 		Set<String> keys = clients.keySet();
 		for(String key : keys) {
 			Session s = clients.get(key); // 접속한 클라이언트의 session값을 꺼내쓸 수 있음

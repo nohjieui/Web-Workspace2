@@ -157,7 +157,9 @@
       <Context docBase="JSP_Review" path="/jr" reloadable="true" source="org.eclipse.jst.jee.server:JSP_Review"/>
       <Context docBase="CookieProject" path="/cookie" reloadable="true" source="org.eclipse.jst.jee.server:CookieProject"/>
       <Context docBase="WebSocketProject" path="/web" reloadable="true" source="org.eclipse.jst.jee.server:WebSocketProject"/>
-	<Context docBase="ActionProject" path="/action" reloadable="true" source="org.eclipse.jst.jee.server:ActionProject"/></Host>
+	  <Context docBase="ActionProject" path="/action" reloadable="true" source="org.eclipse.jst.jee.server:ActionProject"/>
+
+	</Host>
     </Engine>
   </Service>
 </Server>
