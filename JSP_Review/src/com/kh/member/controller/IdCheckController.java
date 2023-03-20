@@ -1,28 +1,25 @@
-package com.kh.notice.controller;
+package com.kh.member.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
-
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.kh.notice.model.service.NoticeService;
-import com.kh.notice.model.vo.Notice;
+import com.kh.member.model.service.MemberService;
 
 /**
- * Servlet implementation class NoticeListController
+ * Servlet implementation class IdCheckController
  */
-@WebServlet("/list.no")
-public class NoticeListController extends HttpServlet {
+@WebServlet("/idCheck.me")
+public class IdCheckController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public NoticeListController() {
+    public IdCheckController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -32,16 +29,15 @@ public class NoticeListController extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		// 1) 공지사항 전체리스트 조회 한 후 
-		// 모든 리스트를 조회할것이기 때문에 selectNoticeList()의 매개변수가 없음
-		ArrayList<Notice> list = new NoticeService().selectNoticeList();
-		// SELECT * FORM NOTICE WHERE STATUS = 'Y'
+		String checkId = request.getParameter("checkId");
 		
-		// 2) 조회 결과를 담아서(request/session...) 응답페이지로 포워딩	
-		request.setAttribute("list", list);
+		String id = new MemberService().selectId(checkId);
 		
-		request.getRequestDispatcher("views/notice/noticeListView.jsp").forward(request, response);
-	
+		response.setContentType("text/html; charset=UTF-8");
+		
+		if(id != null) {
+			response.getWriter().print(id);
+		}	
 	}
 
 	/**

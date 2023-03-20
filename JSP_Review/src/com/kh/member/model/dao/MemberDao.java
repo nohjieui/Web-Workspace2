@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.InvalidPropertiesFormatException;
 import java.util.Properties;
 
+import com.kh.common.JDBCTemplate;
 import com.kh.member.model.vo.Member;
 
 import static com.kh.common.JDBCTemplate.*;
@@ -42,9 +43,9 @@ public class MemberDao {
 		try {
 			pstmt = conn.prepareStatement(sql);
 			
-			pstmt.setString(1, m.getUserName());
-			pstmt.setString(2, m.getUserId());
-			pstmt.setString(3, m.getUserPwd());
+			pstmt.setString(1, m.getUserId());
+			pstmt.setString(2, m.getUserPwd());
+			pstmt.setString(3, m.getUserName());
 			pstmt.setString(4, m.getEmail());
 			pstmt.setString(5, m.getPhone());
 			pstmt.setString(6, m.getGrade());
@@ -77,17 +78,106 @@ public class MemberDao {
 			
 			if(rset.next()) {
 				m = new Member(rset.getInt("USER_NO"),
+							   rset.getString("USER_NAME"),
 							   rset.getString("USER_ID"),
 							   rset.getString("USER_PWD"),
-							   rset.getString("USER_NAME"),
-							   rset.getString("PHONE"),
 							   rset.getString("EMAIL"),
+							   rset.getString("PHONE"),
 							   rset.getString("GRADE"),
 							   rset.getDate("ENROLL_DATE"),
 							   rset.getDate("MODIFY_DATE"),
 							   rset.getString("STATUS"));
 			}
 			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return m;
+	}
+	
+	public String selectId(Connection conn, String checkId) {
+		
+		String id = null;
+		PreparedStatement pstmt = null;
+		ResultSet rset = null;
+		String sql = prop.getProperty("selectId");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, checkId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				id = rset.getString("USER_ID");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(rset);
+			close(pstmt);
+		}
+		return id;
+	}
+	
+	public int updateMember(Connection conn, Member m) {
+		
+		int result = 0;
+		PreparedStatement pstmt = null;
+		String sql = prop.getProperty("updateMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, m.getUserName());
+			pstmt.setString(2, m.getPhone());
+			pstmt.setString(3, m.getEmail());
+			pstmt.setString(4, m.getGrade());
+			pstmt.setString(5, m.getUserId());
+			
+			result = pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			close(pstmt);
+		}
+		return result;
+		
+	}
+	
+	public Member selectMember(Connection conn, String userId) {
+		
+		Member m = null;
+		
+		PreparedStatement pstmt = null;
+		
+		ResultSet rset = null;
+		
+		String sql = prop.getProperty("selectMember");
+		
+		try {
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setString(1, userId);
+			
+			rset = pstmt.executeQuery();
+			
+			if(rset.next()) {
+				m = new Member(rset.getInt("USER_NO"),
+							   rset.getString("USER_NAME"),
+							   rset.getString("USER_ID"),
+							   rset.getString("USER_PWD"),
+							   rset.getString("EMAIL"),
+							   rset.getString("PHONE"),
+							   rset.getString("GRADE"),
+							   rset.getDate("ENROLL_DATE"),
+							   rset.getDate("MODIFY_DATE"),
+							   rset.getString("STATUS"));
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally {

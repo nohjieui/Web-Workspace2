@@ -155,6 +155,7 @@
 				<div align="center">
 					<a href="<%= contextPath %>/mypage.me">마이페이지</a>
 					<a href="<%= contextPath %>/logout.me">로그아웃</a> <!-- a태그는 무조건 get방식 -->
+					<button id="logoutBtn" onclick="logout();">로그아웃</button>
 				</div>
 			</div>
 		<% } %>

@@ -22,7 +22,7 @@
 <body>
 	<%@ include file="../common/menubar.jsp" %>
 	
-	<div class="outer">
+<%-- 	<div class="outer">
 		<br>
 		<h2 align="center">일반게시판 수정하기</h2>
 		<br>
@@ -43,9 +43,9 @@
 							<% for(Category c : list){ %>
 								<option value="<%= c.getCategoryNo() %>"
 								
-<%--  								<% if(c.getCategoryName().equals(b.getCategory())){ %>
+ 								<% if(c.getCategoryName().equals(b.getCategory())){ %>
 									selected="selected"
-								<%} %> --%>
+								<%} %>
 								
 								><%= c.getCategoryName() %></option>
 							<%} %>
@@ -96,6 +96,38 @@
 				<button type="submit">수정하기</button>
 			</div>
 		</form>
+	</div> --%>
+	<div align="center">
+
+	<form action="<%=request.getContextPath()%>/update.bo" method="post">
+	
+	<table>
+	
+		<input type="hidden" value="<%=b.getBoardNo()%>" name="bId">
+		<tr>
+			<td>제목</td>
+			<td><input type="text" name="title"
+			value="<%=b.getBoardTitle() %>"></td>
+			<td>작성자</td>
+			<td><input type="text" name="writer"
+			value="<%=b.getBoardWriter()%>" readonly></td>
+		</tr>
+		<tr>
+			<td>내용</td>
+		</tr>
+		<tr>
+			<td colspan="4"><textarea name="content" cols="60" rows="15"
+			style="resize: none;"><%=b.getBoardContent()%></textarea></td>
+		</tr>
+	</table>
+	
+		<div align="center">
+			<button type="button" onclick="javascript:history.back();">취소</button>
+			<button id="submit" type="submit">수정하기</button>
+		</div>
+	
+	</form>
+	
 	</div>
 
 </body>
